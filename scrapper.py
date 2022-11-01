@@ -13,9 +13,9 @@ def finding_last_page(brand, model, min_year, fuel_type, min_capacity):
     URL = f"https://www.otomoto.pl/osobowe/{brand}/{model}/od-{min_year}?search%5Bfilter_enum_fuel_type%5D={fuel_type}&search%5Bfilter_float_engine_capacity%3Afrom%5D={min_capacity}?page=1"
     request = requests.get(URL)
     soup = BeautifulSoup(request.content, 'html5lib')
-    div = soup.find('div', attrs = {'class':'ooa-1oll9pn e19uumca7'})
-    ul = div.find('ul', attrs={'data-testid': 'pagination-list'})
-    for li in ul.find_all('li', attrs={'data-testid': 'pagination-list-item'}):
+    div = soup.find('div', {'class':'ooa-1oll9pn e19uumca7'})
+    ul = div.find('ul', {'data-testid': 'pagination-list'})
+    for li in ul.find_all('li', {'data-testid': 'pagination-list-item'}):
         global last_page
         last_page = int(li.a.span.text)
 def all_deals(brand, model, min_year, fuel_type, min_capacity, last_page):        
@@ -32,10 +32,18 @@ def all_deals(brand, model, min_year, fuel_type, min_capacity, last_page):
             single_deal(deal_url)
 
             counter +=1
-def single_deal(deal_url):
+def single_deal(deal_url):                      #extract price/ production year/ transmision/ mileage
     request = requests.get(deal_url)
     soup = BeautifulSoup(request.content, 'html5lib')
-    price_span = soup.find('span', {"class":"offer-price__number"})
-    print(price_span.contents[0].strip(), price_span.contents[1].text)
+    span = soup.find('span', {"class":"offer-price__number"})
+    price = span.contents[0].strip()
+    currency = span.contents[1].text
+
+    span = soup.find_all('span', {'class':'offer-main-params__item'})
+    year = span[0].text.strip()
+    mileage = span[1].text.strip()
+    print(price, currency, year, mileage)
+
+
 finding_last_page(brand, model, min_year, fuel_type, min_capacity)
 all_deals(brand, model, min_year, fuel_type, min_capacity, last_page)
