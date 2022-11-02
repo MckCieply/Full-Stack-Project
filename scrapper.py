@@ -32,7 +32,7 @@ def all_deals(brand, model, min_year, fuel_type, min_capacity, last_page):
             single_deal(deal_url)
 
             counter +=1
-def single_deal(deal_url):                      #extract price/ production year/ transmision/ mileage
+def single_deal(deal_url):                      #extract id/ deal add date/ price/ production year/ mileage
     request = requests.get(deal_url)
     soup = BeautifulSoup(request.content, 'html5lib')
     span = soup.find('span', {"class":"offer-price__number"})
@@ -42,7 +42,14 @@ def single_deal(deal_url):                      #extract price/ production year/
     span = soup.find_all('span', {'class':'offer-main-params__item'})
     year = span[0].text.strip()
     mileage = span[1].text.strip()
-    print(price, currency, year, mileage)
+
+    span = soup.find('span',{'class':'offer-meta__value'})
+    add_date = span.contents[0]
+
+    span = soup.find('span',{'id':'ad_id'})
+    id = span.text
+
+    print(id, price, currency, year, mileage, add_date)
 
 
 finding_last_page(brand, model, min_year, fuel_type, min_capacity)
