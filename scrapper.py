@@ -9,7 +9,7 @@ import sqlite3 as sql
 conn = sql.connect("deals.db")
 c = conn.cursor()
 try:    
-    c.execute(f"""CREATE TABLE cars(id INT PRIMARY KEY, brand TEXT, model TEXT, price INT, currency TEXT, year INT, mileage TEXT, add_date TEXT, url TEXT)""")
+    c.execute(f"""CREATE TABLE cars(id INT PRIMARY KEY, brand TEXT, model TEXT, price TEXT, currency TEXT, year INT, mileage TEXT, add_date TEXT, url TEXT)""")
 except:
     pass
 brand = "volkswagen"
@@ -37,7 +37,7 @@ def all_deals(brand, model, min_year, fuel_type, min_capacity, last_page):
         for div in soup.find_all('div',attrs={'class' : "ooa-le0vtj e1b25f6f14"}):
             deals_counter +=1
             deal_url = div.a["href"]
-            print(counter,".",deal_url)
+            #print(counter,".",deal_url)
             single_deal(deal_url)
 
             counter +=1
@@ -45,12 +45,12 @@ def single_deal(deal_url):                      #extract id/ deal add date/ pric
     request = requests.get(deal_url)
     soup = BeautifulSoup(request.content, 'html5lib')
     span = soup.find('span', {"class":"offer-price__number"})
-    price = span.contents[0].replace(" ", "")
+    price = span.contents[0].strip().replace(" ", ".")
     currency = span.contents[1].text
 
     span = soup.find_all('span', {'class':'offer-main-params__item'})
     year = span[0].text.strip()
-    mileage = span[1].text.strip().replace(" ", "")
+    mileage = span[1].text.strip()#.replace(" ", "")
 
     span = soup.find('span',{'class':'offer-meta__value'})
     add_date = span.contents[0]
@@ -59,15 +59,22 @@ def single_deal(deal_url):                      #extract id/ deal add date/ pric
     id = span.text
 
     #print(f"{id}, {brand}, {model}, {price}, {currency}, {year}, {mileage}, {add_date}")
-    c.execute("""INSERT INTO  cars VALUES (?,?,?,?,?,?,?,?,?)""",(id, brand, model, price, currency, year, mileage, add_date, deal_url))
-
-    #c.execute(f"""CREATE TABLE cars(id INT IDENTITY, brand TEXT, model TEXT, price INT, currency TEXT, year INT, mileage TEXT, add_date TEXT)""")
+    try:
+        c.execute("""INSERT INTO  cars VALUES (?,?,?,?,?,?,?,?,?)""",(id, brand, model, price, currency, year, mileage, add_date, deal_url))
+    except:
+        pass
 finding_last_page(brand, model, min_year, fuel_type, min_capacity)
 all_deals(brand, model, min_year, fuel_type, min_capacity, last_page)
 
 conn.commit()
 c.execute("SELECT * FROM cars")
 result = c.fetchall()
-for element in result:
-    print (element)
+for list in result:
+    print(f"""
+    Model: {list[2]}
+        Year: {list[5]} 
+        Mileage:{list[6]}
+        Price:{list[3]} {list[4]}
+        """)
+    
 conn.close()
