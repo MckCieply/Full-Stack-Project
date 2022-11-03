@@ -4,6 +4,14 @@
 #store it in DB
 import requests
 from bs4 import BeautifulSoup
+import time
+import sqlite3 as sql
+conn = sql.connect("deals.db")
+c = conn.cursor()
+try:    
+    c.execute(f"""CREATE TABLE cars(id INT PRIMARY KEY, brand TEXT, model TEXT, price INT, currency TEXT, year INT, mileage TEXT, add_date TEXT, url TEXT)""")
+except:
+    pass
 brand = "volkswagen"
 model = "scirocco"
 min_year = "2008"
@@ -18,6 +26,7 @@ def finding_last_page(brand, model, min_year, fuel_type, min_capacity):
     for li in ul.find_all('li', {'data-testid': 'pagination-list-item'}):
         global last_page
         last_page = int(li.a.span.text)
+        
 def all_deals(brand, model, min_year, fuel_type, min_capacity, last_page):        
     counter = 1
     for page in range(1, last_page+1):
@@ -36,12 +45,12 @@ def single_deal(deal_url):                      #extract id/ deal add date/ pric
     request = requests.get(deal_url)
     soup = BeautifulSoup(request.content, 'html5lib')
     span = soup.find('span', {"class":"offer-price__number"})
-    price = span.contents[0].strip()
+    price = span.contents[0].replace(" ", "")
     currency = span.contents[1].text
 
     span = soup.find_all('span', {'class':'offer-main-params__item'})
     year = span[0].text.strip()
-    mileage = span[1].text.strip()
+    mileage = span[1].text.strip().replace(" ", "")
 
     span = soup.find('span',{'class':'offer-meta__value'})
     add_date = span.contents[0]
@@ -49,8 +58,16 @@ def single_deal(deal_url):                      #extract id/ deal add date/ pric
     span = soup.find('span',{'id':'ad_id'})
     id = span.text
 
-    print(id, price, currency, year, mileage, add_date)
+    #print(f"{id}, {brand}, {model}, {price}, {currency}, {year}, {mileage}, {add_date}")
+    c.execute("""INSERT INTO  cars VALUES (?,?,?,?,?,?,?,?,?)""",(id, brand, model, price, currency, year, mileage, add_date, deal_url))
 
-
+    #c.execute(f"""CREATE TABLE cars(id INT IDENTITY, brand TEXT, model TEXT, price INT, currency TEXT, year INT, mileage TEXT, add_date TEXT)""")
 finding_last_page(brand, model, min_year, fuel_type, min_capacity)
 all_deals(brand, model, min_year, fuel_type, min_capacity, last_page)
+
+conn.commit()
+c.execute("SELECT * FROM cars")
+result = c.fetchall()
+for element in result:
+    print (element)
+conn.close()
