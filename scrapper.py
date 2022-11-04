@@ -12,11 +12,13 @@ try:
     c.execute(f"""CREATE TABLE cars(id INT PRIMARY KEY, brand TEXT, model TEXT, price TEXT, currency TEXT, year INT, mileage TEXT, add_date TEXT, url TEXT)""")
 except:
     pass
+
 brand = "volkswagen"
 model = "scirocco"
 min_year = "2008"
 fuel_type = "petrol"#petrol
 min_capacity = "1900"#1900
+
 def finding_last_page(brand, model, min_year, fuel_type, min_capacity):
     URL = f"https://www.otomoto.pl/osobowe/{brand}/{model}/od-{min_year}?search%5Bfilter_enum_fuel_type%5D={fuel_type}&search%5Bfilter_float_engine_capacity%3Afrom%5D={min_capacity}?page=1"
     request = requests.get(URL)
@@ -30,12 +32,10 @@ def finding_last_page(brand, model, min_year, fuel_type, min_capacity):
 def all_deals(brand, model, min_year, fuel_type, min_capacity, last_page):        
     counter = 1
     for page in range(1, last_page+1):
-        deals_counter = 0
         URL = f'https://www.otomoto.pl/osobowe/{brand}/{model}/od-{min_year}?search%5Bfilter_enum_fuel_type%5D={fuel_type}&search%5Bfilter_float_engine_capacity%3Afrom%5D={min_capacity}%3Fpage%3D1"&page={page}'
         request = requests.get(URL)
         soup = BeautifulSoup(request.content, 'html5lib')
         for div in soup.find_all('div',attrs={'class' : "ooa-le0vtj e1b25f6f14"}):
-            deals_counter +=1
             deal_url = div.a["href"]
             #print(counter,".",deal_url)
             single_deal(deal_url)
@@ -63,8 +63,9 @@ def single_deal(deal_url):                      #extract id/ deal add date/ pric
         c.execute("""INSERT INTO  cars VALUES (?,?,?,?,?,?,?,?,?)""",(id, brand, model, price, currency, year, mileage, add_date, deal_url))
     except:
         pass
-finding_last_page(brand, model, min_year, fuel_type, min_capacity)
-all_deals(brand, model, min_year, fuel_type, min_capacity, last_page)
+if __name__ == "__main__":
+    finding_last_page(brand, model, min_year, fuel_type, min_capacity)
+    all_deals(brand, model, min_year, fuel_type, min_capacity, last_page)
 
 conn.commit()
 c.execute("SELECT * FROM cars")
@@ -78,3 +79,6 @@ for list in result:
         """)
     
 conn.close()
+
+#use __name__ == __main__ żeby to podzielić na dwa pliki
+#Class car vars
