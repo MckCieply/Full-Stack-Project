@@ -5,20 +5,24 @@ import matplotlib.pyplot as plt
 conn = sql.connect("deals.db")
 c = conn.cursor()
 
-c.execute("SELECT price, year, mileage FROM cars")
+c.execute("SELECT year, avg(price) FROM cars GROUP BY year")
 result = c.fetchall()
-price, year, mileage = [], [], []
+year = []
+avg_price = []
+avg_mileage = []
 for row in result:
-    price.append(int(row[0].replace(".", "")))
-    year.append(row[1])
-    mileage.append(int(row[2].replace(" ", "").strip("km")))
+    year.append(row[0])
+    avg_price.append(round(row[1], 3))
 
-#Gotta get AVG smhow dunno how yet
-
+c.execute("SELECT year, avg(mileage) FROM cars GROUP BY year")
+result = c.fetchall()
+for row in result:
+    avg_mileage.append(round(row[1], 3))
 conn.close()
-
-
+plt.plot(year, avg_price, color='red')
+plt.plot(year, avg_mileage) 
+plt.show()
 # print(max_year, min_year)
-# plt.plot(price, year)
+# plt.plot(, year)
 # plt.show()
 
