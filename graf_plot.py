@@ -19,10 +19,12 @@ result = c.fetchall()
 for row in result:
     avg_mileage.append(round(row[1], 3))
 conn.close()
+plt.grid(True, linestyle="--")
 plt.plot(year, avg_price, color='red')
-plt.plot(year, avg_mileage) 
+plt.ylabel("Average Price")
+plt.xlabel("Year")
 plt.show()
-# print(max_year, min_year)
-# plt.plot(, year)
-# plt.show()
+
+plt.plot(year, avg_mileage) 
+
 
