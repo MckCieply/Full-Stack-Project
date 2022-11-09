@@ -6,7 +6,7 @@ import requests
 from bs4 import BeautifulSoup
 import time
 import sqlite3 as sql
-conn = sql.connect("deals.db")
+conn = sql.connect("otofeature/deals.db")
 c = conn.cursor()
 try:    
     c.execute(f"""CREATE TABLE cars(id INT PRIMARY KEY, brand TEXT, model TEXT, price INT, currency TEXT, year INT, mileage INT, add_date TEXT, url TEXT)""")
@@ -40,7 +40,7 @@ def all_deals(brand, model, min_year, fuel_type, min_capacity, last_page):
         soup = BeautifulSoup(request.content, 'html5lib')
         for div in soup.find_all('div',attrs={'class' : "ooa-le0vtj e1b25f6f14"}):
             deal_url = div.a["href"]
-            print(counter,".",deal_url)
+            #print(counter,".",deal_url)
             single_deal(deal_url)
 
             counter +=1
