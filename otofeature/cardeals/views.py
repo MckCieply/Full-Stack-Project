@@ -1,12 +1,16 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from .models import Cars
 # Create your views here.
 
 def index(response):
-    return HttpResponse("<h2> Car deals </h2>")
+    return render(response, "cardeals/base.html", {})
+
+def home(response):
+    return render(response, "cardeals/home.html", {})
 
 def roccodeals(response):
-    return HttpResponse("<h5> Rocco Deals </h5>")
+    return render(response, "cardeals/rocco.html", {})
 
 def lancerdeals(response):
-    return HttpResponse("<h5> Lancer Deals </h5>")
+    return render(response, "cardeals/lancer.html", {})
