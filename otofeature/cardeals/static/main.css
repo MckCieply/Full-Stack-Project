@@ -1,16 +1,14 @@
 body{
-    background-color: rgb(168, 222, 227);
+    background-color:rgb(195, 244, 248);
 }
 .container{
-    background-color: rgb(105, 225, 236);
+    background-color: rgb(168, 222, 227);
     margin-top: 10px;
     padding-top: 5px;
     margin-bottom: 10px;
     padding-bottom: 5px;
     border-radius: 5px;
-}
-h3{
-    text-align: center;
+    height: 100vh;
 }
 #main{
     border-radius: 5px;
