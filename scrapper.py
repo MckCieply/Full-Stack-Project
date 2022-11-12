@@ -13,14 +13,14 @@ try:
 except:
     pass
 
-brand = "Volkswagen"
-model = "Scirocco"
-min_year = "2008"
+brand = "Volkswagen"    #Mitsubishi
+model = "Scirocco"  #Lancer
+min_year = "2008" #2007
 fuel_type = "petrol"#petrol
-min_capacity = "1900"#1900
-
+min_capacity = "1900"#1900 lancer prolly diffrent
+chasis = "coupe" #sedan
 def finding_last_page(brand, model, min_year, fuel_type, min_capacity):
-    URL = f"https://www.otomoto.pl/osobowe/{brand}/{model}/od-{min_year}?search%5Bfilter_enum_fuel_type%5D={fuel_type}&search%5Bfilter_float_engine_capacity%3Afrom%5D={min_capacity}?page=1"
+    URL = f"https://www.otomoto.pl/osobowe/{brand}/{model}/seg-{chasis}/od-{min_year}?search%5Bfilter_enum_fuel_type%5D={fuel_type}&search%5Bfilter_float_engine_capacity%3Afrom%5D={min_capacity}?page=1"
     request = requests.get(URL)
     soup = BeautifulSoup(request.content, 'html5lib')
     try:
@@ -35,7 +35,7 @@ def finding_last_page(brand, model, min_year, fuel_type, min_capacity):
 def all_deals(brand, model, min_year, fuel_type, min_capacity, last_page):        
     counter = 1
     for page in range(1, last_page+1):
-        URL = f'https://www.otomoto.pl/osobowe/{brand}/{model}/od-{min_year}?search%5Bfilter_enum_fuel_type%5D={fuel_type}&search%5Bfilter_float_engine_capacity%3Afrom%5D={min_capacity}%3Fpage%3D1"&page={page}'
+        URL = f'https://www.otomoto.pl/osobowe/{brand}/{model}/seg-{chasis}/od-{min_year}?search%5Bfilter_enum_fuel_type%5D={fuel_type}&search%5Bfilter_float_engine_capacity%3Afrom%5D={min_capacity}%3Fpage%3D1"&page={page}'
         request = requests.get(URL)
         soup = BeautifulSoup(request.content, 'html5lib')
         for div in soup.find_all('div',attrs={'class' : "ooa-le0vtj e1b25f6f14"}):
@@ -44,6 +44,7 @@ def all_deals(brand, model, min_year, fuel_type, min_capacity, last_page):
             single_deal(deal_url)
 
             counter +=1
+        print(f"Total of {counter} deals")
 def single_deal(deal_url):                      #extract id/ deal add date/ price/ production year/ mileage
     request = requests.get(deal_url)
     soup = BeautifulSoup(request.content, 'html5lib')
@@ -66,12 +67,13 @@ def single_deal(deal_url):                      #extract id/ deal add date/ pric
         c.execute("""INSERT INTO  cars VALUES (?,?,?,?,?,?,?,?,?)""",(id, brand, model, price, currency, year, mileage, add_date, deal_url))
     except:
         pass
+    
 if __name__ == "__main__":
     finding_last_page(brand, model, min_year, fuel_type, min_capacity)
     all_deals(brand, model, min_year, fuel_type, min_capacity, last_page)
 
 conn.commit()
 
-print("Finishing...")
+print(f"Finishing... ")
     
 conn.close()
