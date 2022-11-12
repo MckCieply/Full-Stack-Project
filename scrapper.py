@@ -6,15 +6,15 @@ import requests
 from bs4 import BeautifulSoup
 import time
 import sqlite3 as sql
-conn = sql.connect("otofeature/deals.db")
+conn = sql.connect("C:/Users/mwppl/Desktop/Code/Full-Stack-Project/otofeature/deals.db")
 c = conn.cursor()
 try:    
     c.execute(f"""CREATE TABLE cars(id INT PRIMARY KEY, brand TEXT, model TEXT, price INT, currency TEXT, year INT, mileage INT, add_date TEXT, url TEXT)""")
 except:
     pass
 
-brand = "volkswagen"
-model = "scirocco"
+brand = "Volkswagen"
+model = "Scirocco"
 min_year = "2008"
 fuel_type = "petrol"#petrol
 min_capacity = "1900"#1900
