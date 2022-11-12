@@ -11,10 +11,18 @@
     <title>Rocco Deals!</title>
 </head>
 <body>
+<div class="container">
     <ol>
     {% for deal in deals %}
-    <li>{{ deal.price }}</li>
+    <li><br><ul>
+    <li><a href="{{ deal.url }}"> www.otomoto.pl</a></li>
+    <li> {{ deal.model }}</li>
+    <li> {{ deal.price }} {{ deal.currency }}</li>
+    <li> {{ deal.mileage }} km</li>
+
+    </ul></li>
     {%endfor%}
     </ol>
+</div>
 </body>
 </html>
