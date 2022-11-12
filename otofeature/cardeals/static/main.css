@@ -14,12 +14,8 @@ a{
     padding-bottom: 5px;
     border-radius: 5px;
 }
+
 #main{
-    border-radius: 5px;
-    border-style: solid;
-    border-color: rgb(84, 181, 190);
-}
-.col-3{
     border-width: 2px;
     border-style: dashed;
     border-radius: 5px;
