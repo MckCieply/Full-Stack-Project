@@ -11,6 +11,10 @@
     <title>Rocco Deals!</title>
 </head>
 <body>
-    
+    <ol>
+    {% for deal in deals %}
+    <li>{{ deal.price }}</li>
+    {%endfor%}
+    </ol>
 </body>
 </html>
