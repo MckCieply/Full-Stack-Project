@@ -71,17 +71,7 @@ if __name__ == "__main__":
     all_deals(brand, model, min_year, fuel_type, min_capacity, last_page)
 
 conn.commit()
-c.execute("SELECT * FROM cars")
-result = c.fetchall()
-for list in result:
-    print(f"""
-    Model: {list[2]}
-        Year: {list[5]} 
-        Mileage:{list[6]}
-        Price:{list[3]} {list[4]}
-        """)
+
+print("Finishing...")
     
 conn.close()
-
-#use __name__ == __main__ żeby to podzielić na dwa pliki
-#Class car vars
