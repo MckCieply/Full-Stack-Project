@@ -12,18 +12,22 @@
 </head>
 <body>
 <div class="container">
-    <ol>
+    <h1 class = "text-center" id="head"> Volkswagen Scirocco </h1>
+    <div class="row">
     {% for deal in deals %}
-    <li><ul>
-        <li><a href="{{ deal.url }}"> www.otomoto.pl</a></li>
-        <li> {{ deal.model }}</li>
-        <li> {{ deal.year }}</li>
-        <li> {{ deal.price }} {{ deal.currency }}</li>
-        <li> {{ deal.mileage }} km</li>
-        <li> {{ deal.add_date }}</li><br>
-    </ul></li>
+    <div class="col-3">
+        <ul>
+            <br><li><a href="{{ deal.url }}"> www.otomoto.pl</a></li>
+            <li> {{ deal.model }}</li>
+            <li> {{ deal.year }}</li>
+            <li> {{ deal.price }} {{ deal.currency }}</li>
+            <li> {{ deal.mileage }} km</li>
+            <li> {{ deal.add_date }}</li><br>
+        </ul>
+    </div>
     {%endfor%}
-    </ol>
+    </div>
+    
 </div>
 </body>
 </html>
