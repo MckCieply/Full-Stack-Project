@@ -13,12 +13,12 @@ try:
 except:
     pass
 
-brand = "Mitsubishi"    #Mitsubishi
-model = "Lancer"  #Lancer
-min_year = "2007" #2007
+brand = "Mitsubishi"    #Mitsubishi Volkswagen
+model = "Lancer"  #Lancer Scirocco
+min_year = "2007" #2007 2008
 fuel_type = "petrol"#petrol
-min_capacity = "1700"#1900 lancer prolly diffrent
-chasis = "sedan" #sedan
+min_capacity = "1700"#1900 1500-1700
+chasis = "sedan" #sedan coupe
 def finding_last_page(brand, model, min_year, fuel_type, min_capacity):
     URL = f"https://www.otomoto.pl/osobowe/{brand}/{model}/seg-{chasis}/od-{min_year}?search%5Bfilter_enum_fuel_type%5D={fuel_type}&search%5Bfilter_float_engine_capacity%3Afrom%5D={min_capacity}?page=1"
     request = requests.get(URL)
