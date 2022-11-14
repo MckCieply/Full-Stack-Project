@@ -12,7 +12,17 @@
 </head>
 <body>
 <div class="container">
-    <h1 class = "text-center" id="head"> Volkswagen Scirocco </h1>
+    <div class = "row">
+        <div class = "col-3">
+            <h5 class = "text-center" id="nav"><a href="/">Home </a> </h5>
+        </div>
+        <div class="col">
+            <h1 class = "text-center" id="head"> Volkswagen Scirocco </h1>
+        </div>
+        <div class="col-3">
+            <h5 class = "text-center" id="nav"><a href="/lancerdeals">Lancer </a> </h5> 
+        </div>
+    </div>
     <div class="row">
     {% for deal in deals %}
     {% if deal.model == "Scirocco" %}
