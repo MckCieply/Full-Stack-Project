@@ -2,7 +2,7 @@
 import sqlite3 as sql
 import matplotlib.pyplot as plt
 
-conn = sql.connect("deals.db")
+conn = sql.connect("C:/Users/mwppl/Desktop/Code/Full-Stack-Project/otofeature/deals.db")
 c = conn.cursor()
 
 c.execute("SELECT year, avg(price) FROM cars GROUP BY year")
