@@ -33,3 +33,18 @@ a{
     font-weight: bold;
     padding-top: 15px;
 }
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 15px;
+}
+::-webkit-scrollbar-track{
+    background:#002029;
+}
+::-webkit-scrollbar-thumb {
+    background: #00303d;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover{
+    background: #005066;
+}
