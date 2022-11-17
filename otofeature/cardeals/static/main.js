@@ -10,10 +10,10 @@ for(var i = 0; i<price.length;i++){
     if (price[i].textContent < 30000){
         price[i].style.color = "#17bc17";
     }
-    else if(price[i].textContent > 30000 && price[i].textContent < 40000){
+    else if(price[i].textContent >= 30000 && price[i].textContent < 40000){
         price[i].style.color = "yellow";
     }
-    else if(price[i].textContent > 40000 && price[i].textContent < 50000){
+    else if(price[i].textContent >= 40000 && price[i].textContent < 50000){
         price[i].style.color = "orange";
     }
     else{
@@ -25,10 +25,10 @@ for(var i = 0; i<mileage.length;i++){
     if (mileage[i].textContent < 100000){
         mileage[i].style.color = "#17bc17";
     }
-    else if(mileage[i].textContent > 100000 && mileage[i].textContent < 150000){
+    else if(mileage[i].textContent >= 100000 && mileage[i].textContent < 150000){
         mileage[i].style.color = "yellow";
     }
-    else if(mileage[i].textContent > 150000 && mileage[i].textContent < 200000){
+    else if(mileage[i].textContent >= 150000 && mileage[i].textContent < 200000){
         mileage[i].style.color = "orange";
     }
     else{
