@@ -8,6 +8,7 @@ import sqlite3 as sql
 
 class Car():
     def __init__(self, brand, model, min_year, fuel_type, min_capacity, chasis):
+        self.conn = sql.connect("C:/Users/mwppl/Desktop/Code/Full-Stack-Project/otofeature/deals.db")
         self.brand = brand
         self.model = model 
         self.min_year = min_year 
@@ -16,7 +17,6 @@ class Car():
         self.chasis = chasis
         self.finding_last_page()
         self.all_deals()
-        self.db_query()
 
     def finding_last_page(self):
         URL = f"https://www.otomoto.pl/osobowe/{self.brand}/{self.model}/seg-{self.chasis}/od-{self.min_year}?search%5Bfilter_enum_fuel_type%5D={self.fuel_type}&search%5Bfilter_float_engine_capacity%3Afrom%5D={self.min_capacity}?page=1"
@@ -31,7 +31,7 @@ class Car():
         except:
             last_page = 1
         print("Last page: ", last_page)
-        print("URL: ", URL)
+
     def all_deals(self):        
         counter = 1
         for page in range(1, last_page+1):
@@ -41,12 +41,12 @@ class Car():
             for div in soup.find_all('div',attrs={'class' : "ooa-le0vtj e1b25f6f14"}):
                 self.deal_url = div.a["href"]
                 #print(counter,".",deal_url)
-                self.single_deal(self.deal_url)
-
+                self.single_deal(self.deal_url)    
                 counter +=1
-            print(f"Total of {counter} deals")
+        print(f"Total of {counter} deals ...")
+        self.finish_commit()
+
     def single_deal(self,deal_url):                      #extract id/ deal add date/ price/ production year/ mileage
-        print("Single deal URL: ", deal_url)
         request = requests.get(deal_url)
         soup = BeautifulSoup(request.content, 'html5lib')
         span = soup.find('span', {"class":"offer-price__number"})
@@ -62,9 +62,10 @@ class Car():
 
         span = soup.find('span',{'id':'ad_id'})
         self.id = span.text
+        self.db_query()
+
     def db_query(self):
-        conn = sql.connect("C:/Users/mwppl/Desktop/Code/Full-Stack-Project/otofeature/deals.db")
-        c = conn.cursor()
+        c = self.conn.cursor()
         try:    
             c.execute(f"""CREATE TABLE cars(id INT PRIMARY KEY, brand TEXT, model TEXT, price INT, currency TEXT, year INT, mileage INT, add_date TEXT, url TEXT)""")
         except:
@@ -72,18 +73,15 @@ class Car():
         try:
             c.execute("""INSERT INTO  cars VALUES (?,?,?,?,?,?,?,?,?)""",(self.id, self.brand, self.model, self.price, self.currency, self.year, self.mileage, self.add_date, self.deal_url))
         except:
-            pass
-        conn.commit()
+            print("Somethings wrong i can feel it")
+        
+    def finish_commit(self):
+        self.conn.commit()
 
         print(f"Finishing... ")
-            
-        conn.close()
+                        
+        self.conn.close()
 
 scirocco = Car("Volkswagen", "Scirocco", "2008", "petrol", "1900", "")
+
 lancer = Car("Mitsubishi", "Lancer", "2007", "petrol", "1700", "sedan")
-
-
-# if __name__ == "__main__":
-#     scirocco.finding_last_page()
-#     scirocco.all_deals()
-
