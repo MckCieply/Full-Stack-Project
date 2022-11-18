@@ -21,6 +21,7 @@ class Car():
         self.all_deals()
 
     def finding_last_page(self):
+        #Finding whether There is more than one page of deals
         URL = f"https://www.otomoto.pl/osobowe/{self.brand}/{self.model}/seg-{self.chasis}/od-{self.min_year}?search%5Bfilter_enum_fuel_type%5D={self.fuel_type}&search%5Bfilter_float_engine_capacity%3Afrom%5D={self.min_capacity}?page=1"
         request = requests.get(URL)
         soup = BeautifulSoup(request.content, 'html5lib')
@@ -33,7 +34,8 @@ class Car():
         except:
             last_page = 1
 
-    def all_deals(self):        
+    def all_deals(self):  
+        #Scrapping exact deals from page with all deals      
         counter = 1
         for page in range(1, last_page+1):
             URL = f'https://www.otomoto.pl/osobowe/{self.brand}/{self.model}/seg-{self.chasis}/od-{self.min_year}?search%5Bfilter_enum_fuel_type%5D={self.fuel_type}&search%5Bfilter_float_engine_capacity%3Afrom%5D={self.min_capacity}%3Fpage%3D1"&page={page}'
@@ -47,7 +49,8 @@ class Car():
         print(f"Total of {counter} deals ...")
         self.finish_commit()
 
-    def single_deal(self,deal_url):                      #extract id/ deal add date/ price/ production year/ mileage
+    def single_deal(self,deal_url):
+        #Scrapping directly from exact deal URL                      
         request = requests.get(deal_url)
         soup = BeautifulSoup(request.content, 'html5lib')
         span = soup.find('span', {"class":"offer-price__number"})
@@ -66,6 +69,8 @@ class Car():
         self.db_query()
 
     def db_query(self):
+        #Checking whether table is created, if not create one
+        #Inserting into the table each single deal
         c = self.conn.cursor()
         try:    
             c.execute(f"""CREATE TABLE cars(id INT PRIMARY KEY, brand TEXT, model TEXT, price INT, currency TEXT, year INT, mileage INT, add_date TEXT, url TEXT)""")
@@ -76,7 +81,9 @@ class Car():
             c.execute("""INSERT INTO  cars VALUES (?,?,?,?,?,?,?,?,?)""",(self.id, self.brand, self.model, self.price, self.currency, self.year, self.mileage, self.add_date, self.deal_url))
         except:
             pass
+        
     def finish_commit(self):
+        #Commiting bunch of ready inserts, once per car model
         self.conn.commit()
 
         print(f"Finishing... ")              
@@ -88,5 +95,5 @@ lancer = Car("Mitsubishi", "Lancer", "2007", "petrol", "1700", "sedan")
 
 c30 =  Car("Volvo", "c30","2008", "petrol", "", "")
 
-print(f"--- {round(time.time() - start_time, 2)} seconds ---")
-#feature runtime
+if __name__ == "__main__":
+    print(f"--- {round(time.time() - start_time, 2)} seconds ---")
