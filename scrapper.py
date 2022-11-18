@@ -72,8 +72,9 @@ class Car():
             pass
         try:
             c.execute("""INSERT INTO  cars VALUES (?,?,?,?,?,?,?,?,?)""",(self.id, self.brand, self.model, self.price, self.currency, self.year, self.mileage, self.add_date, self.deal_url))
+            print("Inserting")
         except:
-            print("Somethings wrong i can feel it")
+            print("Already Satyfied")
         
     def finish_commit(self):
         self.conn.commit()
@@ -85,3 +86,5 @@ class Car():
 scirocco = Car("Volkswagen", "Scirocco", "2008", "petrol", "1900", "")
 
 lancer = Car("Mitsubishi", "Lancer", "2007", "petrol", "1700", "sedan")
+
+c30 =  Car("Volvo", "c30","2008", "petrol", "", "")
