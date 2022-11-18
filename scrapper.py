@@ -5,6 +5,8 @@
 import requests
 from bs4 import BeautifulSoup
 import sqlite3 as sql
+import time
+start_time = time.time()
 
 class Car():
     def __init__(self, brand, model, min_year, fuel_type, min_capacity, chasis):
@@ -30,7 +32,6 @@ class Car():
                 last_page = int(li.a.span.text)
         except:
             last_page = 1
-        print("Last page: ", last_page)
 
     def all_deals(self):        
         counter = 1
@@ -70,17 +71,15 @@ class Car():
             c.execute(f"""CREATE TABLE cars(id INT PRIMARY KEY, brand TEXT, model TEXT, price INT, currency TEXT, year INT, mileage INT, add_date TEXT, url TEXT)""")
         except:
             pass
+        
         try:
             c.execute("""INSERT INTO  cars VALUES (?,?,?,?,?,?,?,?,?)""",(self.id, self.brand, self.model, self.price, self.currency, self.year, self.mileage, self.add_date, self.deal_url))
-            print("Inserting")
         except:
-            print("Already Satyfied")
-        
+            pass
     def finish_commit(self):
         self.conn.commit()
 
-        print(f"Finishing... ")
-                        
+        print(f"Finishing... ")              
         self.conn.close()
 
 scirocco = Car("Volkswagen", "Scirocco", "2008", "petrol", "1900", "")
@@ -88,3 +87,6 @@ scirocco = Car("Volkswagen", "Scirocco", "2008", "petrol", "1900", "")
 lancer = Car("Mitsubishi", "Lancer", "2007", "petrol", "1700", "sedan")
 
 c30 =  Car("Volvo", "c30","2008", "petrol", "", "")
+
+print(f"--- {round(time.time() - start_time, 2)} seconds ---")
+#feature runtime
