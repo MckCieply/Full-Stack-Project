@@ -17,5 +17,9 @@ def lancerdeals(response):
     deals = Cars.objects.all()
     return render(response, "cardeals/lancer.html", {'deals': deals})
 
+def c30deals(response):
+    deals = Cars.objects.all()
+    return render(response, "cardeals/c30.html", {"deals": deals})
+
 #{% extends 'cardeals/base.html' %}
 #to extend base template

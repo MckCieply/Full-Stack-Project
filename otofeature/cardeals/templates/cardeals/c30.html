@@ -1,0 +1,18 @@
+{% extends 'cardeals/base.html' %}
+
+{% block title %} c30 Deals {% endblock %}
+{% block model %} Volvo c30 {% endblock %}
+{% block content %}
+    {% if deal.model == "c30" %}
+    <div class="col-3" id="main">
+        <ul>
+            <br><li><a href="{{ deal.url }}" target="_blank"> www.otomoto.pl</a></li>
+            <li> {{ deal.model }}</li>
+            <li> {{ deal.year }}</li>
+            <li> <span class="price">{{ deal.price }}</span> {{ deal.currency }}</li>
+            <li> <span class="mileage">{{ deal.mileage }}</span> km</li>
+            <li> {{ deal.add_date }}</li><br>
+        </ul>
+    </div>
+    {% endif %}
+{% endblock %}
