@@ -48,3 +48,7 @@ a{
 ::-webkit-scrollbar-thumb:hover{
     background: #005066;
 }
+
+#graph{
+    width:100%;
+}
