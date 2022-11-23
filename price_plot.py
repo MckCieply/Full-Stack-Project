@@ -48,4 +48,5 @@ majors = ['10k','20k','30k','40k','50k','60k','70k','80k','90k','100k']
 ax.yaxis.set_major_formatter(ticker.FixedFormatter(majors))
 ax.xaxis.set_major_locator(ML(1))
 ax.grid(True, linestyle="--" )
+plt.savefig("otofeature\cardeals\static\PricePlot.png")
 plt.show()
