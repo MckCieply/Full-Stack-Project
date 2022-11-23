@@ -38,15 +38,15 @@ for row in rows:
     if row[1] == "c30":
         avg_prices.append(row[0])
         year.append(row[2])
-ax.plot(year, avg_prices, label = "c30", linewidth = 2, marker = ".")
-ax.set_title("Average prices")
-ax.legend()
-ax.set_xlabel("Year")
-ax.set_ylabel("Avg. Mileage")
-ax.yaxis.set_major_locator(ML(10000))
-majors = ['10k','20k','30k','40k','50k','60k','70k','80k','90k','100k']
-ax.yaxis.set_major_formatter(ticker.FixedFormatter(majors))
-ax.xaxis.set_major_locator(ML(1))
-ax.grid(True, linestyle="--" )
-plt.savefig("otofeature\cardeals\static\PricePlot.png")
+ax.plot(year, avg_prices, label = "c30", linewidth = 2, marker = ".")       #Plot one of lines
+ax.set_title("Average prices")                                              #Set graph title
+ax.legend()                                                                 #Show legend
+ax.set_xlabel("Year")                                                       #Show x label
+ax.set_ylabel("Avg. Mileage")                                               #show y label
+ax.yaxis.set_major_locator(ML(10000))                                       #set range between marks on y
+majors = ['10k','20k','30k','40k','50k','60k','70k','80k','90k','100k']     #custom values for y
+ax.yaxis.set_major_formatter(ticker.FixedFormatter(majors))                 #use custom values for y
+ax.xaxis.set_major_locator(ML(1))                                           #set range between marks on x
+ax.grid(True, linestyle="--" )                                              #set grid 
+plt.savefig("otofeature\cardeals\static\PricePlot.png")                     #save plot
 # plt.show()
