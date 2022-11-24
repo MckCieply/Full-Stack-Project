@@ -11,30 +11,16 @@ c.execute("SELECT ROUND(avg(mileage)), model, year from Cars group by model, yea
 rows = c.fetchall()
 
 fig, ax = plt.subplots()
-avg_mileage = []
-year = []
-for row in rows:
-    if(row[1] == "Scirocco"):
-        avg_mileage.append(row[0])
-        year.append(row[2])
-
-ax.plot(year, avg_mileage, label = "Scirocco", linewidth = 2, marker =".", color="magenta" )
-
-avg_mileage = []
-year = []
-for row in rows:
-    if(row[1] == "Lancer"):
-        avg_mileage.append(row[0])
-        year.append(row[2])
-ax.plot(year, avg_mileage, label = "Lancer", linewidth = 2, marker =".", color="white")
-
-avg_mileage = []
-year = []
-for row in rows:
-    if(row[1] == "c30"):
-        avg_mileage.append(row[0])
-        year.append(row[2])
-ax.plot(year, avg_mileage, label = "c30", linewidth = 2, marker =".", color="black")
+def single_plot(brand):
+    single_plot.avg_mileage = [row[0] for row in rows if row[1] == brand]
+    single_plot.year = [row[2] for row in rows if row[1] == brand]
+    
+single_plot("Scirocco")
+ax.plot(single_plot.year, single_plot.avg_mileage, label = "Scirocco", linewidth = 2, marker = ".", color="magenta")
+single_plot("Lancer")
+ax.plot(single_plot.year, single_plot.avg_mileage, label = "Lancer", linewidth = 2, marker =".", color="white")
+single_plot("c30")
+ax.plot(single_plot.year, single_plot.avg_mileage, label = "c30", linewidth = 2, marker =".", color="black")
 
 titleparams = {
 'fontsize': 20,
