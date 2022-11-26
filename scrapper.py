@@ -1,7 +1,4 @@
-#Choose scirocco / lancer x
-#Scrape it
-#make it look nice
-#store it in DB
+
 import requests
 from bs4 import BeautifulSoup
 import sqlite3 as sql
@@ -25,25 +22,24 @@ class Car():
         URL = f"https://www.otomoto.pl/osobowe/{self.brand}/{self.model}/seg-{self.chasis}/od-{self.min_year}?search%5Bfilter_enum_fuel_type%5D={self.fuel_type}&search%5Bfilter_float_engine_capacity%3Afrom%5D={self.min_capacity}?page=1"
         request = requests.get(URL)
         soup = BeautifulSoup(request.content, 'html5lib')
+        global last_page
         try:
             div = soup.find('div', {'class':'ooa-1oll9pn e19uumca7'})
             ul = div.find('ul', {'data-testid': 'pagination-list'})
             for li in ul.find_all('li', {'data-testid': 'pagination-list-item'}):
-                global last_page
                 last_page = int(li.a.span.text)
         except:
             last_page = 1
-
     def all_deals(self):  
         #Scrapping exact deals from page with all deals      
-        counter = 1
+        counter = 0
         for page in range(1, last_page+1):
             URL = f'https://www.otomoto.pl/osobowe/{self.brand}/{self.model}/seg-{self.chasis}/od-{self.min_year}?search%5Bfilter_enum_fuel_type%5D={self.fuel_type}&search%5Bfilter_float_engine_capacity%3Afrom%5D={self.min_capacity}%3Fpage%3D1"&page={page}'
             request = requests.get(URL)
             soup = BeautifulSoup(request.content, 'html5lib')
-            for div in soup.find_all('div',attrs={'class' : "ooa-le0vtj e1b25f6f14"}):
+            for div in soup.find_all('div',attrs={'class' : "ooa-1mxnix4 e1b25f6f15"}):
                 self.deal_url = div.a["href"]
-                #print(counter,".",deal_url)
+                #print(counter+1,".",self.deal_url)
                 self.single_deal(self.deal_url)    
                 counter +=1
         print(f"Total of {counter} deals ...")
