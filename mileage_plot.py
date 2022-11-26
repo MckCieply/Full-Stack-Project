@@ -4,7 +4,7 @@ import sqlite3 as sql
 import matplotlib.pyplot as plt
 from matplotlib.ticker import MultipleLocator as ML
 import matplotlib.ticker as ticker
-conn = sql.connect("C:/Users/mwppl/Desktop/Code/Full-Stack-Project/otofeature/deals.db")
+conn = sql.connect("./otofeature/deals.db")
 c = conn.cursor()
 
 c.execute("SELECT ROUND(avg(mileage)), model, year from Cars group by model, year order by model, year")
@@ -20,7 +20,7 @@ ax.plot(single_plot.year, single_plot.avg_mileage, label = "Scirocco", linewidth
 single_plot("Lancer")
 ax.plot(single_plot.year, single_plot.avg_mileage, label = "Lancer", linewidth = 2, marker =".", color="white")
 single_plot("c30")
-ax.plot(single_plot.year, single_plot.avg_mileage, label = "c30", linewidth = 2, marker =".", color="black")
+ax.plot(single_plot.year, single_plot.avg_mileage, label = "c30", linewidth = 2, marker =".", color="blue")
 
 titleparams = {
 'fontsize': 20,
