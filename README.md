@@ -1,7 +1,9 @@
 # Full-Stack-Project
-Web Scraping -> Storing -> Visualization (BS4, Django, Frontend)
+Web Scraped by Beautiful Soup 4
+Stored in SQLite
+Showed in Django templates
+Analyzed by Matplotlib
+Made look nice by Bootstap
+Some help from JS as well
 
-1. Scrape otomoto for usefull data 'bout sciroccos 'n' lancers x
-2. Store this data in database 
-3. Show the data on the website
-4. Make it look nice
+Personal project to scrape for VW Sciroccos, Mitsubishi Lancers and Volvo c30.
