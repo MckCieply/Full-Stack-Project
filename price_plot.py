@@ -33,7 +33,7 @@ ax.set_title("Average prices", fontdict=titleparams, color="white")         #Set
 
 ax.legend()                                                                 #Show legend
 ax.set_xlabel("Year", color="white")                                        #Show x label
-ax.set_ylabel("Avg. Mileage", color="white")                                #show y label
+ax.set_ylabel("Avg. Price", color="white")                                  #show y label
 ax.yaxis.set_major_locator(ML(10000))                                       #set range between marks on y
 majors = ['10k','20k','30k','40k','50k','60k','70k','80k','90k','100k']     #custom values for y
 ax.yaxis.set_major_formatter(ticker.FixedFormatter(majors))                 #use custom values for y
