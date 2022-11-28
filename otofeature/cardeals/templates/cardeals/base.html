@@ -11,18 +11,16 @@
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
-<div class="container">
-    <div class = "row">
-        <div class = "col-3">
-            <h5 class = "text-center" id="nav" ><a href="/">Home </a> </h5>
-        </div>
-        <div class="col">
-            <h1 class = "text-center" id="head"> {% block model %} {% endblock %} </h1>
-        </div>
-        <div class="col-3">
-            <h5 class = "text-center" id="nav"><a href="/roccodeals">Scirocco </a> </h5> 
-        </div>
+<nav class="navbar">
+    <div class = "container">
+        <a href='/'><h4> Home</h4> </a>
+        <a href='/roccodeals'><h4> Scirocco</h4> </a>
+        <a href='/lancerdeals'><h4> Lancer</h4> </a>
+        <a href='/c30deals'><h4> C30</h4> </a>
     </div>
+</nav>
+<div class="container">
+        <h1 class = "text-center" id="head"> {% block model %} {% endblock %} </h1>
     <div class="row"> 
     {% for deal in deals %}
     {% block content %}

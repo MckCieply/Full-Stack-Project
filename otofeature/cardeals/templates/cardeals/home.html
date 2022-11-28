@@ -8,26 +8,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="{% static '/main.css' %}" rel="stylesheet" >
-    <title>Projects Home Page</title>
+    <title>Deals - Home</title>
 </head>
 <body>
     <div class="container text-center">
-        <h3> Welcome on our home page!</h3>
+        <h3> Otomoto deals</h3>
         <div class="row">
             <div class="col-2" id="main">
-                <h5>Avalible sub-pages</h5>
-            
-                <p><a href="roccodeals">Scirocco</a></p>
-                <p><a href="lancerdeals">Lancer X</a></p>
-                <p><a href="c30">c30</a></p>
+                <h5>Volkswagen</h5>
+                <a href="roccodeals"><h6>Scirocco</h6></a><br>
+                <h5>Mitsubishi</h5>
+                <a href="lancerdeals"><h6>Lancer X</h6></a><br>
+                <h5>Volvo</h5>
+                <a href="c30"><h6>c30</h6></a><br>
             
             </div>
             <div class="col-10" id ="main">
-                <div class="row">
-                    <p> All entries: </p>
-                    <p> Page represents prices on each models imported from otomoto, it might not be 
-                        actuall. </p>
-                </div>
                 <div class="row"> 
                     <div class="col-6">
                         <img src="{% static '/PricePlot.png'%}" alt="PricePlot" id="graph">

@@ -4,41 +4,24 @@ import sqlite3 as sql
 import matplotlib.pyplot as plt
 from matplotlib.ticker import MultipleLocator as ML
 import matplotlib.ticker as ticker
-import numpy as np
-conn = sql.connect("C:/Users/mwppl/Desktop/Code/Full-Stack-Project/otofeature/deals.db")
+conn = sql.connect("./otofeature/deals.db")
 c = conn.cursor()
 
 c.execute("SELECT ROUND(avg(price)), model, year from Cars group by model, year order by model, year")
 
 rows = c.fetchall()
 fig, ax = plt.subplots()
-avg_prices = []
-year = []
-# for row in rows:
-#     if row[1] == "Scirocco":
-#         short = str(row[0]).rstrip("000")
-#         avg_prices.append(short)
-#         year.append(row[2])
-# print (avg_prices)
-for row in rows:
-    if row[1] == "Scirocco":
-        avg_prices.append(row[0])
-        year.append(row[2])
-ax.plot(year, avg_prices, label = "Scirocco", linewidth = 2, marker = ".", color="magenta")
-avg_prices = []
-year = []
-for row in rows:
-    if row[1] == "Lancer":
-        avg_prices.append(row[0])
-        year.append(row[2])
-ax.plot(year, avg_prices, label = "Lancer", linewidth = 2, marker = ".", color="white")
-avg_prices = []
-year = []
-for row in rows:
-    if row[1] == "c30":
-        avg_prices.append(row[0])
-        year.append(row[2])
-ax.plot(year, avg_prices, label = "c30", linewidth = 2, marker = ".", color="black")
+
+def single_plot(brand):
+    single_plot.avg_prices = [row[0] for row in rows if row[1] == brand]
+    single_plot.year = [row[2] for row in rows if row[1] == brand]
+    
+single_plot("Scirocco")
+ax.plot(single_plot.year, single_plot.avg_prices, label = "Scirocco", linewidth = 2, marker = ".", color="magenta")
+single_plot("Lancer")
+ax.plot(single_plot.year, single_plot.avg_prices, label = "Lancer", linewidth = 2, marker =".", color="white")
+single_plot("c30")
+ax.plot(single_plot.year, single_plot.avg_prices, label = "c30", linewidth = 2, marker =".", color="blue")
 
 titleparams = {                                                             #Title parameters
 'fontsize': 20,
@@ -50,7 +33,7 @@ ax.set_title("Average prices", fontdict=titleparams, color="white")         #Set
 
 ax.legend()                                                                 #Show legend
 ax.set_xlabel("Year", color="white")                                        #Show x label
-ax.set_ylabel("Avg. Mileage", color="white")                                #show y label
+ax.set_ylabel("Avg. Price", color="white")                                  #show y label
 ax.yaxis.set_major_locator(ML(10000))                                       #set range between marks on y
 majors = ['10k','20k','30k','40k','50k','60k','70k','80k','90k','100k']     #custom values for y
 ax.yaxis.set_major_formatter(ticker.FixedFormatter(majors))                 #use custom values for y
