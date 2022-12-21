@@ -25,5 +25,10 @@ def delete(conn, cur, to_remove):
             print(f"{element}... ", end="")
             cur.execute('DELETE FROM cars WHERE id = ?', (element,))
             print("Done")
-        conn.commit
+        conn.commit()
+
+#gotta rework new to take whole list after scrapping is done
+def main(conn, cur, old):
+    get_old(cur)
+    get_new()
 
