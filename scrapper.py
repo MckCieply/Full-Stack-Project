@@ -3,11 +3,12 @@ import requests
 from bs4 import BeautifulSoup
 import sqlite3 as sql
 import time
+
+from removeold import main
 start_time = time.time()
 
 class Car():
     def __init__(self, brand, model, min_year, fuel_type, min_capacity, chasis):
-        self.conn = sql.connect("C:/Users/mwppl/Desktop/Code/Full-Stack-Project/otofeature/deals.db")
         self.brand = brand
         self.model = model 
         self.min_year = min_year 
@@ -68,7 +69,7 @@ class Car():
     def db_query(self):
         #Checking whether table is created, if not create one
         #Inserting into the table each single deal
-        c = self.conn.cursor()
+        c = conn.cursor()
         try:    
             c.execute(f"""CREATE TABLE cars(id INT PRIMARY KEY, brand TEXT, model TEXT, price INT, currency TEXT, year INT, mileage INT, add_date TEXT, url TEXT)""")
         except:
@@ -81,12 +82,12 @@ class Car():
         
     def finish_commit(self):
         #Commiting bunch of ready inserts, once per car model
-        self.conn.commit()
+        conn.commit()
 
         print(f"Finishing... ")              
-        self.conn.close()
 
 deals_ids = []
+conn = sql.connect("otofeature\deals.db")
 
 scirocco = Car("Volkswagen", "Scirocco", "2008", "petrol", "1900", "")
 
@@ -97,3 +98,6 @@ c30 =  Car("Volvo", "c30","2008", "petrol", "", "")
 if __name__ == "__main__":
     print(f"--- {round(time.time() - start_time, 2)} seconds ---")
     print(f"All of {len(deals_ids)} deals")
+    main(conn,deals_ids)
+
+conn.close()
