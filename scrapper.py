@@ -42,7 +42,7 @@ class Car():
                 #print(counter+1,".",self.deal_url)
                 self.single_deal(self.deal_url)    
                 counter +=1
-        print(f"Total of {counter} deals ...")
+        print(f"Total of {counter} {self.model} deals ...")
         self.finish_commit()
 
     def single_deal(self,deal_url):
@@ -62,6 +62,7 @@ class Car():
 
         span = soup.find('span',{'id':'ad_id'})
         self.id = span.text
+        deals_ids.append(self.id)
         self.db_query()
 
     def db_query(self):
@@ -85,6 +86,8 @@ class Car():
         print(f"Finishing... ")              
         self.conn.close()
 
+deals_ids = []
+
 scirocco = Car("Volkswagen", "Scirocco", "2008", "petrol", "1900", "")
 
 lancer = Car("Mitsubishi", "Lancer", "2007", "petrol", "1700", "sedan")
@@ -93,3 +96,4 @@ c30 =  Car("Volvo", "c30","2008", "petrol", "", "")
 
 if __name__ == "__main__":
     print(f"--- {round(time.time() - start_time, 2)} seconds ---")
+    print(f"All of {len(deals_ids)} deals")
