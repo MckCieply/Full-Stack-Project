@@ -63,7 +63,7 @@ class Car():
 
         span = soup.find('span',{'id':'ad_id'})
         self.id = span.text
-        deals_ids.append(self.id)
+        deals_ids.append(int(self.id))
         self.db_query()
 
     def db_query(self):
