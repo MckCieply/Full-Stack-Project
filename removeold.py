@@ -24,7 +24,7 @@ def delete(conn, cur, to_remove):
         conn.commit()
 
 #gotta rework new to take whole list after scrapping is done
-def main(conn, new):
+def remover(conn, new):
     cur = conn.cursor()
     old = get_old(cur)
     check(conn, cur, new, old)

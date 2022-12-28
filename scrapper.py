@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 import sqlite3 as sql
 import time
 
-from removeold import main
+from removeold import remover
 start_time = time.time()
 
 class Car():
@@ -98,6 +98,6 @@ c30 =  Car("Volvo", "c30","2008", "petrol", "", "")
 if __name__ == "__main__":
     print(f"--- {round(time.time() - start_time, 2)} seconds ---")
     print(f"All of {len(deals_ids)} deals")
-    main(conn,deals_ids)
+    remover(conn,deals_ids)
 
 conn.close()
