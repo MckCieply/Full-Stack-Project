@@ -3,6 +3,9 @@ import requests
 from bs4 import BeautifulSoup
 import sqlite3 as sql
 import time
+import http.client as httpc
+httpc._MAXHEADERS = 1000
+
 
 from removeold import remover
 start_time = time.time()
@@ -37,8 +40,9 @@ class Car():
         for page in range(1, last_page+1):
             URL = f'https://www.otomoto.pl/osobowe/{self.brand}/{self.model}/seg-{self.chasis}/od-{self.min_year}?search%5Bfilter_enum_fuel_type%5D={self.fuel_type}&search%5Bfilter_float_engine_capacity%3Afrom%5D={self.min_capacity}%3Fpage%3D1"&page={page}'
             request = requests.get(URL)
+            #print(URL)
             soup = BeautifulSoup(request.content, 'html5lib')
-            for div in soup.find_all('div',attrs={'class' : "ooa-1mxnix4 e1b25f6f15"}):
+            for div in soup.find_all('div',attrs={'class' : "ooa-9tzypk e1p19lg715"}):
                 self.deal_url = div.a["href"]
                 #print(counter+1,".",self.deal_url)
                 self.single_deal(self.deal_url)    
