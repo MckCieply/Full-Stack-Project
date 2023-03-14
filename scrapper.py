@@ -28,7 +28,7 @@ class Car():
         soup = BeautifulSoup(request.content, 'html5lib')
         global last_page
         try:
-            div = soup.find('div', {'class':'ooa-1oll9pn e19uumca7'})
+            div = soup.find('div', {'class':'ooa-1oll9pn eagdslh7'})
             ul = div.find('ul', {'data-testid': 'pagination-list'})
             for li in ul.find_all('li', {'data-testid': 'pagination-list-item'}):
                 last_page = int(li.a.span.text)
@@ -40,9 +40,9 @@ class Car():
         for page in range(1, last_page+1):
             URL = f'https://www.otomoto.pl/osobowe/{self.brand}/{self.model}/seg-{self.chasis}/od-{self.min_year}?search%5Bfilter_enum_fuel_type%5D={self.fuel_type}&search%5Bfilter_float_engine_capacity%3Afrom%5D={self.min_capacity}%3Fpage%3D1"&page={page}'
             request = requests.get(URL)
-            #print(URL)
+            print(URL)
             soup = BeautifulSoup(request.content, 'html5lib')
-            for div in soup.find_all('div',attrs={'class' : "ooa-9tzypk e1p19lg715"}):
+            for div in soup.find_all('div',attrs={'class' : "ooa-1nihvj5 eayvfn615"}):
                 self.deal_url = div.a["href"]
                 #print(counter+1,".",self.deal_url)
                 self.single_deal(self.deal_url)    
